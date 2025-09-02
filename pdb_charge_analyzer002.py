@@ -411,7 +411,7 @@ def filter_by_charge_distribution(df, pdb_column):
         else:
             return df[pdb_column].dropna().astype(str).tolist()
     
-    filtered_df = df[df['charge_distribution'].isin(['red', 'orange', 'Red', 'Orange', 'RED', 'ORANGE'])]
+    filtered_df = df[df['charge_distribution'].isin(['red', 'orange', 'Red', 'Orange', 'RED', 'ORANGE','Purple','purple'])]
     
     if len(filtered_df) == 0:
         print("❌ No proteins found with red or orange charge distribution")
@@ -419,9 +419,10 @@ def filter_by_charge_distribution(df, pdb_column):
         return []
     
     pdb_ids = filtered_df[pdb_column].dropna().astype(str).tolist()
-    print(f"🔍 Filtered to {len(pdb_ids)} proteins with red/orange charge distribution")
+    print(f"🔍 Filtered to {len(pdb_ids)} proteins with red/orange/purple charge distribution")
     print(f"   Red: {len(filtered_df[filtered_df['charge_distribution'].str.lower() == 'red'])}")
     print(f"   Orange: {len(filtered_df[filtered_df['charge_distribution'].str.lower() == 'orange'])}")
+    print(f"   Purple: {len(filtered_df[filtered_df['charge_distribution'].str.lower() == 'purple'])}")
     
     return pdb_ids
 
@@ -791,7 +792,7 @@ def run_full_mode(analyzer, params):
         if not all_pdb_ids:
             return
             
-        print(f"✅ Found {len(all_pdb_ids)} PDB IDs with red/orange charge distribution")
+        print(f"✅ Found {len(all_pdb_ids)} PDB IDs with red/orange/purple charge distribution")
         
     except Exception as e:
         print(f"❌ Error reading CSV: {e}")
@@ -815,7 +816,7 @@ def run_full_mode(analyzer, params):
         print("All filtered PDB IDs have already been processed!")
         return
     
-    print(f"Processing {len(remaining_ids)} remaining PDB IDs with red/orange charge distribution...")
+    print(f"Processing {len(remaining_ids)} remaining PDB IDs with red/orange/purple charge distribution...")
     
     # Get batch size for incremental saves
     batch_input = input(f"Save frequency (every N proteins) [default: 20]: ").strip()
